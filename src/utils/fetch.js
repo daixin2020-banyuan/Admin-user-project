@@ -9,9 +9,9 @@ var api = axios.create({
 
 api.interceptors.request.use(
   config => {
-    const id = localStorage.getItem("user") || "";
-    if (id) {
-      config.headers.user = id;
+    const user = JSON.parse(localStorage.getItem("userInfo")) || "";
+    if (user) {
+      config.headers.user = user._id;
     }
     console.log("路由拦截====发送请求的时候", config);
     return config;

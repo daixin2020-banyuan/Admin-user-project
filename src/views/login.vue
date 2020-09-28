@@ -41,6 +41,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   name: "login",
   components: {},
@@ -59,6 +61,8 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setDataToLocal"]),
+
     checkData() {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
@@ -71,8 +75,7 @@ export default {
     async login() {
       const data = await this.yPost("/user/login", this.loginForm);
       if (data) {
-        let id = data.user._id;
-        localStorage.setItem("user", id);
+        this.setDataToLocal(data.user);
         this.$router.push({
           name: "user"
         });

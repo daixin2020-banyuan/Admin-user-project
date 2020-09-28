@@ -15,14 +15,14 @@
           <el-form-item prop="username">
             <el-input
               style="margin-top:15px"
-              v-model="registRules.username"
+              v-model="registForm.username"
               placeholder="用户名:6位以上数字和字母组成"
             ></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input
               style="margin-top:15px"
-              v-model="registRules.password"
+              v-model="registForm.password"
               placeholder="密码"
               type="password"
             ></el-input>
@@ -30,31 +30,34 @@
           <el-form-item prop="school">
             <el-input
               style="margin-top:15px"
-              v-model="registRules.school"
+              v-model="registForm.school"
               placeholder="学校"
             ></el-input>
           </el-form-item>
           <el-form-item prop="nickname">
             <el-input
               style="margin-top:15px"
-              v-model="registRules.nickname"
+              v-model="registForm.nickname"
               placeholder="昵称"
             ></el-input>
           </el-form-item>
           <el-form-item prop="age">
             <el-input
               style="margin-top:15px"
-              v-model="registRules.age"
+              v-model.number="registForm.age"
               placeholder="请输入年龄"
             ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-select v-model="gender" style="width:350px;margin-top:15px">
+            <el-select
+              v-model="registForm.gender"
+              style="width:350px;margin-top:15px"
+            >
               <el-option
                 v-for="item in options"
                 :key="item.gender"
                 :label="item.label"
-                :gender="item.gender"
+                :value="item.gender"
               >
               </el-option>
             </el-select>
@@ -73,6 +76,7 @@
 </template>
 
 <script>
+import { validateUsername } from "../utils/validate";
 export default {
   name: "regist",
   components: {},
@@ -83,21 +87,13 @@ export default {
         password: "", //string
         school: "", //string
         nickname: "", //string
-        age: null, //string || number
+        age: "", //string || number
         gender: 1 //number
       },
       registRules: {
         username: [
-          {
-            required: true,
-            message: "请输入用户名",
-            trigger: "blur"
-          },
-          {
-            // type: Number,
-            message: "请输入英文或者数字",
-            trigger: "blur"
-          },
+          { validator: validateUsername, trigger: "blur" },
+
           { min: 6, message: "长度在6位以上", trigger: "blur" }
         ],
         password: [
@@ -108,14 +104,13 @@ export default {
           { required: true, message: "请输入学校名称", trigger: "blur" }
         ],
         nickname: [
-          { required: true, message: "请输入学校名称", trigger: "blur" }
+          { required: true, message: "请输入用户昵称", trigger: "blur" }
         ],
         age: [
-          { required: true, message: "请输入学校名称", trigger: "blur" },
-          { message: "请输入数字", trigger: "blur" }
+          { required: true, message: "请输入年龄", trigger: "blur" },
+          { type: "number", message: "请输入数字", trigger: "blur" }
         ]
       },
-      gender: 1,
       options: [
         {
           gender: 1,
@@ -141,8 +136,6 @@ export default {
     async regist() {
       const data = await this.yPost("/user/regist", this.registForm);
       if (data) {
-        let id = data.user._id;
-        localStorage.setItem("user", id);
         this.$router.push({
           name: "login"
         });
