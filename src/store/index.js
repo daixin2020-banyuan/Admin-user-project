@@ -13,7 +13,6 @@ export default new Vuex.Store({
       state.list = data;
     }
   },
-  getters: {},
   actions: {
     setDataToLocal({ commit }, value) {
       localStorage.setItem("userInfo", JSON.stringify(value));

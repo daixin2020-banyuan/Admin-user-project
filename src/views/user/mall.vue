@@ -59,19 +59,22 @@ export default {
           message: "兑换成功",
           type: "success"
         });
-        await this.updateUser();
+        this.updateUser();
       }
     },
     async updateUser() {
-      let userinfo = {
-        id: JSON.parse(localStorage.getItem("userInfo"))._id
-      };
-      const data = await this.yGet("/user/userinfo", {
-        params: userinfo
-      });
-      if (data) {
-        console.log(data);
-        this.setDataToLocal(data);
+      let info = localStorage.getItem("userInfo");
+      if (info) {
+        let userinfo = {
+          id: JSON.parse(info)._id
+        };
+        const data = await this.yGet("/user/userinfo", {
+          params: userinfo
+        });
+        if (data) {
+          console.log(data);
+          this.setDataToLocal(data);
+        }
       }
     }
   }

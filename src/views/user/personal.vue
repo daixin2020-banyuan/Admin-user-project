@@ -5,14 +5,14 @@
         个人信息
         <span
           class="span1"
-          :style="{ display: flag == 'userinfo' ? 'block' : 'none' }"
+          :style="{ display: componentId == 'userinfo' ? 'block' : 'none' }"
         ></span>
       </h1>
       <h1 @click="fun('exchange')">
         兑换记录
         <span
           class="span2"
-          :style="{ display: flag == 'exchange' ? 'block' : 'none' }"
+          :style="{ display: componentId == 'exchange' ? 'block' : 'none' }"
         ></span>
       </h1>
     </div>
@@ -36,8 +36,7 @@ export default {
   },
   data() {
     return {
-      flag: "userinfo",
-      componentId: userinfo
+      componentId: "userinfo"
     };
   },
   methods: {

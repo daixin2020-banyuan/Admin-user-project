@@ -2,7 +2,7 @@
   <div class="exchange-container">
     <div v-for="item in exchangeList" :key="item.index" class="ex-list-style">
       <p>{{ item.name }}</p>
-      <p>{{ item.createdAt | formatTime }}</p>
+      <p>{{ item.exchangeDate | formatTime }}</p>
     </div>
   </div>
 </template>
@@ -40,6 +40,7 @@ export default {
       });
 
       if (data) {
+        console.log(data);
         this.exchangeList = data;
       }
     }

@@ -45,16 +45,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.name !== "login") {
-    if (to.name !== "regist") {
-      const isLogin = localStorage.getItem("userInfo") || "";
-      if (!isLogin) {
-        next({
-          name: "login"
-        });
-      } else {
-        next();
-      }
+  if (to.name !== ("regist" && "login")) {
+    const isLogin = localStorage.getItem("userInfo") || "";
+    if (!isLogin) {
+      next({
+        name: "login"
+      });
     } else {
       next();
     }

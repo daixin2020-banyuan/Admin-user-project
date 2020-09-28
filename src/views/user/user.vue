@@ -14,9 +14,8 @@
         <router-link to="/user/personal">
           <div
             class="chos-bg"
-            @click="change('个人中心')"
             :style="{
-              backgroundColor: title == '个人中心' ? 'rgb(134,0,155)' : ''
+              backgroundColor: $route.name == 'personal' ? 'rgb(134,0,155)' : ''
             }"
           >
             <p>个人中心</p>
@@ -26,22 +25,15 @@
         <router-link to="/user/mall">
           <div
             class="chos-bg"
-            @click="change('兑换商城')"
             :style="{
-              backgroundColor: title == '兑换商城' ? 'rgb(134,0,155)' : ''
+              backgroundColor: $route.name == 'mall' ? 'rgb(134,0,155)' : ''
             }"
           >
             <p>积分商城</p>
           </div>
         </router-link>
 
-        <div
-          class="chos-bg"
-          @click="change('退出')"
-          :style="{
-            backgroundColor: title == '退出' ? 'rgb(134,0,155)' : ''
-          }"
-        >
+        <div class="chos-bg">
           <el-button type="text" class="quit-btn" @click="open">
             <p style="font-size:15px">退出</p></el-button
           >
@@ -71,9 +63,6 @@ export default {
     this.getUserInfo();
   },
   methods: {
-    change(title) {
-      this.title = title;
-    },
     async getUserInfo() {
       let userinfo = {
         id: JSON.parse(localStorage.getItem("userInfo"))._id
